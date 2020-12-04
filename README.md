@@ -166,19 +166,6 @@ show(fig)  # 図を表示
 
 
 
-
-
-
-
-
-
-
-<div class="bk-root" id="fb5f5e38-c4db-4fc5-9954-d13cac374d31" data-root-id="1001"></div>
-
-
-
-
-
 土日など取引がない日付でローソク足に間が空いています。これはこれで良さそうですが、実はよろしくありません。なぜならば、大部分の人は間が空いていないローソク足を見ているからです。取引するのは人間（今はそうとも限りませんが）なので、その心理を左右する図を見る必要があります。
 
 Bokehの図ではインデックスがX軸になります。そこでインデックスを日付からレコード順に変更します。さらにレコード順とX軸に表示する日付との対応を設定します。
@@ -209,19 +196,6 @@ show(fig)  # 図を表示
 
 
 
-
-
-
-
-
-
-
-<div class="bk-root" id="bce327bf-9578-47e9-934f-7733dee96a2a" data-root-id="1222"></div>
-
-
-
-
-
 うまく土日などの取引のない日を詰めて表示できました。ただ、右下に80と表示されていて不格好です。元々の範囲を超えた部分は表記が置き換えられないようです。これを回避するにはxaxis.boundsで明示的に範囲を指定します。ここでは、左右に隙間が開くのが格好悪いので、(0, df.index[-1])ではなく(-1, df.index[-1]+1)にしてみました。
 
 
@@ -249,21 +223,6 @@ fig.x_range.range_padding = 0.01  # X軸の表記の頻度を調整
 output_notebook()  # 出力先をノートブックに設定
 show(fig)  # 図を表示
 ```
-
-
-
-
-
-
-
-
-
-
-<div class="bk-root" id="cd3221be-0129-4d47-92e3-2155fbe1a995" data-root-id="1384"></div>
-
-
-
-
 
 
 
@@ -300,19 +259,6 @@ fig.x_range.range_padding = 0.01
 output_notebook()  # 出力先をノートブックに設定
 show(fig)
 ```
-
-
-
-
-
-
-
-
-
-
-<div class="bk-root" id="516935dc-2da3-4119-80ba-c98ba977ca7a" data-root-id="5858"></div>
-
-
 
 
 
@@ -354,19 +300,6 @@ show(fig)
 
 
 
-
-
-
-
-
-
-
-<div class="bk-root" id="219c1ce1-4250-401e-9be6-028aea19fca7" data-root-id="1755"></div>
-
-
-
-
-
 吹き出しの日付表示もうまくいきました。
 
 別の方法としてHoverToolを追加してフォーマットを指定する方法もあります。ついでにCrosshairToolも追加してみましょう。
@@ -394,12 +327,12 @@ fig.xaxis.bounds = (-1, df.index[-1] + 1)
 fig.x_range.range_padding = 0.01
 
 hoverTool = HoverTool(
-    tooltips=[('Date', '@Date{%F}'), # フォーマッターを指定する書き方
+    tooltips=[('Date', '@Date\\{%F\\}'), # フォーマッターを指定する書き方
               ('Open', '@Open'),
               ('High', '@High'),
               ('Low', '@Low'),
               ('Close', '@Close'),
-              ('Volume',  '@Volume{,}')],
+              ('Volume',  '@Volume\\{,\\}')],
 
     formatters={
         '@Date' : 'datetime', # 日付のフォーマットに　datetime　を使用
@@ -415,19 +348,6 @@ fig.add_tools(CrosshairTool())
 output_notebook()  # 出力先をノートブックに設定
 show(fig)
 ```
-
-
-
-
-
-
-
-
-
-
-<div class="bk-root" id="9722a43e-c9f5-4b89-8302-8ecaef6c583b" data-root-id="1961"></div>
-
-
 
 
 
@@ -475,19 +395,6 @@ show(column(fig, select))  # 図を表示
 
 
 
-
-
-
-
-
-
-
-<div class="bk-root" id="3d3a1852-afe5-4c2d-9436-9b4fb38f5f0b" data-root-id="2254"></div>
-
-
-
-
-
 下段の範囲指定をドラッグすると上段のローソク足の表示範囲が同期します。範囲の左右の境界線をドラッグすると表示範囲の幅が変わります。
 
 出来高のグラフも追加しましょう。まずは、出来高単独のグラフです。価格が上がったときの出来高を白抜き、下がった時を黒塗りで表示します。
@@ -519,19 +426,6 @@ volume.xaxis.minor_tick_out = 0
 output_notebook()  # 出力先をノートブックに設定
 show(volume)
 ```
-
-
-
-
-
-
-
-
-
-
-<div class="bk-root" id="02b2b008-1ef4-4285-a5c4-7697050b2a47" data-root-id="2490"></div>
-
-
 
 
 
@@ -602,19 +496,6 @@ show(column(fig, volume, select, sizing_mode='stretch_width'))  # 図を表示
 
 
 
-
-
-
-
-
-
-
-<div class="bk-root" id="f38a8201-5c1b-4703-9007-6f2a478986e3" data-root-id="2808"></div>
-
-
-
-
-
 最後に、少し複雑になりますが、出来高をローソク足と同じグラフに表示するようにしてみます。縦軸を2軸にして、右側を出来高にします。縦軸の範囲が二種類になるので、それぞれ明示的に範囲を指定しないと表示がうまくいきませんのでご注意ください。
 
 
@@ -676,20 +557,5 @@ output_notebook()  # 出力先をノートブックに設定
 output_file('soliton.html') # ファイルにも出力
 show(column(fig, select, sizing_mode='stretch_width'))  # 図を表示
 ```
-
-
-
-
-
-
-
-
-
-
-<div class="bk-root" id="3af0a1c6-50c5-489b-bc7d-a52989424811" data-root-id="14079"></div>
-
-
-
-
 
 以上です
