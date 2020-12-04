@@ -309,7 +309,7 @@ fig.xaxis.bounds = (-1, df.index[-1] + 1)
 fig.x_range.range_padding = 0.01
 
 hoverTool = HoverTool(
-    tooltips=[('Date', '@Date\\{%F\\}'), # フォーマッターを指定する書き方
+    tooltips=[('Date', '@Date\{\%F\}'), # フォーマッターを指定する書き方
               ('Open', '@Open'),
               ('High', '@High'),
               ('Low', '@Low'),
