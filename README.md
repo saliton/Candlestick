@@ -5,7 +5,7 @@ Bokehは簡単にインタラクティブなグラフを生成できるpythonの
 まず、弊社の株価を取得します。
 
 
-```
+```Python
 import pandas_datareader.data as web
 solitondata=web.DataReader("3040.JP", "stooq").dropna().sort_index()
 solitondata
