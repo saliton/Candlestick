@@ -1,3 +1,5 @@
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://github.com/Soliton-Analytics-Team/Candlestick/raw/main/Candlestick.ipynb)
+
 # Google Colabでグリグリ動くローソク足をBokehで生成してみた
 
 Bokehは簡単にインタラクティブなグラフを生成できるpythonのライブラリです。ローソク足も[ここ](https://docs.bokeh.org/en/latest/docs/gallery/candlestick.html)にサンプルがあります。これを元に、さらに高機能化してみたいと思います。なお、データの取得以外は単独のセルで動作するように記述しています。
