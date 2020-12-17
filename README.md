@@ -1,4 +1,4 @@
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://github.com/Soliton-Analytics-Team/Candlestick/raw/main/Candlestick.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Soliton-Analytics-Team/Candlestick/raw/main/Candlestick.ipynb)
 
 # Google Colabでグリグリ動くローソク足をBokehで生成してみた
 
