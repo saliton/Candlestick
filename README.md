@@ -128,7 +128,7 @@ solitondata
 [公式サンプル](https://docs.bokeh.org/en/latest/docs/gallery/candlestick.html)を元にした最小構成のコードは以下になります。
 
 
-```
+```Python
 from bokeh.plotting import figure, show, output_notebook
 
 df = solitondata['2020-8-1':] # データの範囲を絞る
@@ -146,14 +146,14 @@ output_notebook()  # 出力先をノートブックに設定
 show(fig)  # 図を表示
 ```
 
-
+![png](files/1.png)
 
 土日など取引がない日付でローソク足に間が空いています。これはこれで良さそうですが、実はよろしくありません。なぜならば、大部分の人は間が空いていないローソク足を見ているからです。取引するのは人間（今はそうとも限りませんが）なので、その心理を左右する図を見る必要があります。
 
 Bokehの図ではインデックスがX軸になります。そこでインデックスを日付からレコード順に変更します。さらにレコード順とX軸に表示する日付との対応を設定します。
 
 
-```
+```Python
 from bokeh.plotting import figure, show, output_notebook
 import pandas as pd
 
@@ -176,12 +176,12 @@ output_notebook()  # 出力先をノートブックに設定
 show(fig)  # 図を表示
 ```
 
-
+![png](files/2.png)
 
 うまく土日などの取引のない日を詰めて表示できました。ただ、右下に80と表示されていて不格好です。元々の範囲を超えた部分は表記が置き換えられないようです。これを回避するにはxaxis.boundsで明示的に範囲を指定します。ここでは、左右に隙間が開くのが格好悪いので、(0, df.index[-1])ではなく(-1, df.index[-1]+1)にしてみました。
 
 
-```
+```Python
 from bokeh.plotting import figure, show, output_notebook
 import pandas as pd
 
@@ -206,12 +206,12 @@ output_notebook()  # 出力先をノートブックに設定
 show(fig)  # 図を表示
 ```
 
-
+![png](files/3.png)
 
 次に吹き出しで値を表示するようにしてみます。そのために元データをColumnDataSourceに変換する必要があります。その上で、figure()のtooltips引数に表示する属性を指定します。
 
 
-```
+```Python
 from bokeh.plotting import figure, show, output_notebook
 from bokeh.models import ColumnDataSource
 import pandas as pd
@@ -242,12 +242,12 @@ output_notebook()  # 出力先をノートブックに設定
 show(fig)
 ```
 
-
+![png](files/4.png)
 
 吹き出し表示は日付以外はうまくできています。いろいろ試しましたが、figure()のtooltipsの指定では日付のフォーマットを指定できないようです。仕方ないので、DateStrというカラムを増設して日付の文字表記を格納します。
 
 
-```
+```Python
 from bokeh.plotting import figure, show, output_notebook
 from bokeh.models import ColumnDataSource
 import pandas as pd
@@ -280,14 +280,14 @@ output_notebook()  # 出力先をノートブックに設定
 show(fig)
 ```
 
-
+![png](files/5.png)
 
 吹き出しの日付表示もうまくいきました。
 
 別の方法としてHoverToolを追加してフォーマットを指定する方法もあります。ついでにCrosshairToolも追加してみましょう。
 
 
-```
+```Python
 from bokeh.plotting import figure, show, output_notebook
 from bokeh.models import HoverTool, CrosshairTool, ColumnDataSource
 import pandas as pd
@@ -331,14 +331,14 @@ output_notebook()  # 出力先をノートブックに設定
 show(fig)
 ```
 
-
+![png](files/6.png)
 
 吹き出しの日付表示もうまくいきました。ただ、意外と吹き出し表示は邪魔ですね。以下のコードでは外します。
 
 RangeToolを使うと、データの表示範囲を全体を俯瞰しつつインタラクティブに変更できます。この時、figure()でx_rangeを指定しないとうまく表示されませんので注意してください。
 
 
-```
+```Python
 from bokeh.plotting import figure, show, output_notebook, output_file
 from bokeh.layouts import column
 from bokeh.models import RangeTool, ColumnDataSource
@@ -375,14 +375,14 @@ output_notebook()  # 出力先をノートブックに設定
 show(column(fig, select))  # 図を表示
 ```
 
-
+![png](files/7.png)
 
 下段の範囲指定をドラッグすると上段のローソク足の表示範囲が同期します。範囲の左右の境界線をドラッグすると表示範囲の幅が変わります。
 
 出来高のグラフも追加しましょう。まずは、出来高単独のグラフです。価格が上がったときの出来高を白抜き、下がった時を黒塗りで表示します。
 
 
-```
+```Python
 from bokeh.plotting import figure, show, output_notebook
 from bokeh.models import ColumnDataSource, NumeralTickFormatter
 import pandas as pd
@@ -409,12 +409,12 @@ output_notebook()  # 出力先をノートブックに設定
 show(volume)
 ```
 
-
+![png](files/8.png)
 
 次に、ローソク足の下に出来高のグラフを表示させます。ここでは、図のタイトルを設定しました。また、図の横幅をページの幅に応じて伸縮するようにしています。
 
 
-```
+```Python
 from bokeh.plotting import figure, show, output_notebook, output_file
 from bokeh.layouts import column
 from bokeh.models import RangeTool, ColumnDataSource, CrosshairTool, NumeralTickFormatter
@@ -476,12 +476,12 @@ output_file('soliton.html') # ファイルにも出力
 show(column(fig, volume, select, sizing_mode='stretch_width'))  # 図を表示
 ```
 
-
+![png](files/9.png)
 
 最後に、少し複雑になりますが、出来高をローソク足と同じグラフに表示するようにしてみます。縦軸を2軸にして、右側を出来高にします。縦軸の範囲が二種類になるので、それぞれ明示的に範囲を指定しないと表示がうまくいきませんのでご注意ください。
 
 
-```
+```Python
 from bokeh.plotting import figure, show, output_notebook, output_file
 from bokeh.layouts import column
 from bokeh.models import RangeTool, ColumnDataSource, CrosshairTool, NumeralTickFormatter, Range1d, LinearAxis
@@ -539,5 +539,7 @@ output_notebook()  # 出力先をノートブックに設定
 output_file('soliton.html') # ファイルにも出力
 show(column(fig, select, sizing_mode='stretch_width'))  # 図を表示
 ```
+
+![png](files/10.png)
 
 以上です
